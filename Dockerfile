@@ -9,6 +9,11 @@ FROM openjdk:17-slim as main
 
 WORKDIR /app
 
-COPY --from=build /build/libs/ticket-booking-app-0.0.1-SNAPSHOT.jar ./ticket-booking-app.jar
+ENV DB_URL=${DB_HOST:-default}
+ENV DB_USER=${DB_USER:-default}
+ENV DB_PASSWORD=${DB_PASSWORD:-default}
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "ticket-booking-app.jar"]
+
+COPY --from=build /build/libs/ticket_booking_app-0.0.1-SNAPSHOT.jar ./ticket_booking_app.jar
+
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "ticket_booking_app.jar"]
